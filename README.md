@@ -28,6 +28,8 @@
 - Read the [documentation](https://openoa.readthedocs.io/en/latest/).
 - Learn how to [contribute](contributing.md).
 
+<!-- Simple verification change for testing PR workflow -->
+
 OpenOA [^1] is a software framework written in Python for assessing wind plant performance using
 operational assessment (OA) methodologies that consume time series data from wind plants. The goal
 of the project is to provide an open source implementation of common data structures, analysis
