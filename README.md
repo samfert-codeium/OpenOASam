@@ -122,7 +122,7 @@ effort more broadly,** please use citation [^1], which is provided below in BibT
 
 ### Requirements
 
-- Python 3.8-3.11 with pip.
+- Python 3.13 with pip.
 
 We strongly recommend using the Anaconda Python distribution and creating a new conda environment
 for OpenOA. You can download Anaconda through
@@ -139,7 +139,7 @@ After installing Anaconda (or alternative), create and activate a new conda envi
 name "openoa-env":
 
 ```bash
-conda create --name openoa-env python=3.10
+conda create --name openoa-env python=3.13
 conda activate openoa-env
 ```
 
@@ -175,8 +175,7 @@ is also allowed).
 - `all`: for the complete dependency stack
 
 > **Important**
-> If using Python 3.11, install `openoa` only, then reinstall adding the modifiers to reduce
-> the amount of time it takes for pip to resolve the dependency stack.
+> With Python 3.13, you can install `openoa` with any combination of modifiers directly.
 
 #### Common Installation Issues
 

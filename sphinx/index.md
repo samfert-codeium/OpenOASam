@@ -72,7 +72,7 @@ For further information about the features and citations, please see the
 
 ## Installation
 
-Compatible with Python 3.8 through 3.11 with pip.
+Compatible with Python 3.13 with pip.
 
 We strongly recommend using the Anaconda Python distribution and creating a new conda environment
 for OpenOA. You can download Anaconda through
@@ -90,7 +90,7 @@ After installing Anaconda (or alternative), create and activate a new conda envi
 name "openoa-env":
 
 ```bash
-conda create --name openoa-env python=3.10
+conda create --name openoa-env python=3.13
 conda activate openoa-env
 ```
 

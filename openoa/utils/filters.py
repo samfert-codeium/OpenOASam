@@ -103,7 +103,12 @@ def unresponsive_flag(
     flag = flag == 0
 
     # Need to flag preceding `threshold` values as well
-    flag = flag | np.any([flag.shift(-1 - i, axis=0) for i in range(threshold - 1)], axis=0)
+    shifts = [flag.shift(-1 - i, axis=0) for i in range(threshold - 1)]
+    if shifts:
+        any_result = shifts[0]
+        for shift in shifts[1:]:
+            any_result = any_result | shift
+        flag = flag | any_result
 
     # Return back a pd.Series if one was provided, else a pd.DataFrame
     return flag[col[0]] if to_series else flag
