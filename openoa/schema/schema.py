@@ -1,4 +1,27 @@
-"""Methods to generate YAML and JSON schema files"""
+"""
+Schema generation utilities for OpenOA metadata.
+
+This module provides functions to generate YAML and JSON schema files from the
+OpenOA metadata class definitions. These schema files document the expected
+data structure and column requirements for different analysis types.
+
+The generated schemas can be used for:
+    - Documentation of data requirements
+    - Validation of input data structures
+    - Configuration file templates
+    - API documentation
+
+The module supports generating both complete schemas (all possible columns)
+and analysis-specific schemas (only columns required for a specific analysis).
+
+Example:
+    >>> from openoa.schema.schema import create_schema, create_analysis_schema
+    >>> full_schema = create_schema()
+    >>> aep_schema = create_analysis_schema("MonteCarloAEP")
+
+When run as a script, this module generates all schema files in both YAML
+and JSON formats for each analysis type.
+"""
 
 from __future__ import annotations
 
@@ -22,9 +45,9 @@ from openoa.schema.metadata import (
 )
 
 
-HERE = Path(__file__).resolve().parent
+HERE: Path = Path(__file__).resolve().parent
 
-meta_class_map = {
+meta_class_map: dict[str, type] = {
     "scada": SCADAMetaData,
     "meter": MeterMetaData,
     "tower": TowerMetaData,

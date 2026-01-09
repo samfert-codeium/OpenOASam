@@ -1,5 +1,7 @@
 <img src="https://github.com/NREL/OpenOA/blob/develop/Open%20OA%20Final%20Logos/Color/Open%20OA%20Color%20Transparent%20Background.png?raw=true" alt="OpenOA" width="300"/>
 
+**[English](#software-overview) | [Portugues](#visao-geral-do-software-portugues)**
+
 -----
 
 [![Journal of Open Source Software Badge](https://joss.theoj.org/papers/d635ef3c3784d49f6e81e07a0b35ff6b/status.svg)](https://joss.theoj.org/papers/d635ef3c3784d49f6e81e07a0b35ff6b)
@@ -329,6 +331,121 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+-----
+
+## Visao Geral do Software (Portugues)
+
+OpenOA e um framework de software escrito em Python para avaliacao de desempenho de parques eolicos usando metodologias de avaliacao operacional (OA) que consomem dados de series temporais de parques eolicos. O objetivo do projeto e fornecer uma implementacao de codigo aberto de estruturas de dados comuns, metodos de analise e funcoes utilitarias relevantes para OA de parques eolicos.
+
+### Estrutura do Projeto
+
+```
+OpenOA/
+├── openoa/                    # Pacote principal
+│   ├── __init__.py           # Ponto de entrada do modulo
+│   ├── plant.py              # Classe PlantData para dados operacionais
+│   ├── logging.py            # Utilitarios de logging
+│   ├── analysis/             # Modulos de analise
+│   │   ├── aep.py           # Analise Monte Carlo AEP
+│   │   ├── wake_losses.py   # Analise de perdas por esteira
+│   │   ├── electrical_losses.py  # Perdas eletricas
+│   │   ├── eya_gap_analysis.py   # Analise de gap EYA
+│   │   ├── yaw_misalignment.py   # Desalinhamento de yaw
+│   │   └── turbine_long_term_gross_energy.py  # Energia bruta de longo prazo
+│   ├── utils/                # Funcoes utilitarias
+│   │   ├── filters.py       # Filtros de dados
+│   │   ├── imputing.py      # Imputacao de dados faltantes
+│   │   ├── timeseries.py    # Manipulacao de series temporais
+│   │   ├── met_data_processing.py  # Processamento de dados meteorologicos
+│   │   ├── power_curve/     # Ajuste de curvas de potencia
+│   │   ├── plot.py          # Funcoes de visualizacao
+│   │   └── qa.py            # Garantia de qualidade
+│   └── schema/              # Definicoes de esquema de dados
+│       ├── metadata.py      # Classes de metadados
+│       └── schema.py        # Geracao de esquemas
+├── examples/                 # Notebooks de exemplo
+│   ├── 00_intro_to_plant_data.ipynb  # Introducao ao PlantData
+│   ├── 01_utils_examples.ipynb       # Exemplos de utilitarios
+│   ├── 02a_plant_aep_analysis.ipynb  # Analise AEP
+│   └── ...                           # Outros exemplos
+├── test/                     # Testes unitarios e de regressao
+├── sphinx/                   # Documentacao Sphinx
+└── pyproject.toml           # Configuracao do projeto
+```
+
+### Metodos de Analise Incluidos
+
+| Nome | Descricao |
+| --- | --- |
+| `MonteCarloAEP` | Estima a producao anual de energia (AEP) de longo prazo de um parque eolico com base em dados operacionais, incluindo quantificacao de incerteza atraves de simulacao Monte Carlo. |
+| `TurbineLongTermGrossEnergy` | Estima a energia ideal de longo prazo das turbinas, definida como a AEP que seria gerada se todas as turbinas operassem normalmente. |
+| `ElectricalLosses` | Estima as perdas eletricas medias comparando a energia produzida nas turbinas com a energia entregue a rede. |
+| `EYAGapAnalysis` | Realiza analise de gap entre a estimativa de producao de energia pre-construcao (EYA) e a AEP real. |
+| `WakeLosses` | Estima as perdas internas por esteira experimentadas pelo parque eolico e por cada turbina individual. |
+| `StaticYawMisalignment` | Estima o desalinhamento estatico de yaw para turbinas individuais em funcao da velocidade do vento. |
+
+### Instalacao Rapida
+
+```bash
+# Criar ambiente conda
+conda create --name openoa-env python=3.10
+conda activate openoa-env
+
+# Clonar e instalar
+git clone https://github.com/NREL/OpenOA.git
+cd OpenOA
+pip install .
+
+# Para desenvolvimento
+pip install -e ".[develop, docs, examples]"
+```
+
+### Exemplo de Uso
+
+```python
+from openoa import PlantData
+from openoa.analysis import MonteCarloAEP
+
+# Carregar dados da planta
+plant = PlantData(
+    metadata=metadata_dict,
+    scada=scada_dataframe,
+    meter=meter_dataframe,
+    reanalysis={"era5": era5_dataframe}
+)
+
+# Executar analise AEP
+aep_analysis = MonteCarloAEP(plant)
+aep_analysis.run(num_sim=1000)
+
+# Acessar resultados
+print(aep_analysis.results)
+```
+
+### Executando os Notebooks
+
+```bash
+# Extrair dados de exemplo
+unzip examples/data/la_haute_borne.zip -d examples/data/la_haute_borne/
+
+# Iniciar Jupyter
+jupyter lab
+```
+
+Os notebooks de exemplo estao no diretorio `examples/` e demonstram como usar cada metodo de analise com dados reais do parque eolico La Haute Borne.
+
+### Requisitos e Dependencias
+
+- Python 3.8-3.11
+- NumPy, Pandas, SciPy
+- Scikit-learn, Statsmodels
+- Matplotlib, Bokeh
+- PyProj, Shapely
+
+Para a lista completa de dependencias, consulte o arquivo `pyproject.toml`.
+
+-----
 
 ## References
 
